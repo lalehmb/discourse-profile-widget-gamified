@@ -1,0 +1,60 @@
+.user-profile {
+  line-height: 10px;
+  .widget-header {
+    width: 143px;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .welcome-body {
+    padding: 5px 0;
+    line-height: 20px;
+  }
+  img {
+    display: inline-block;
+    vertical-align: initial;
+  }
+  .handles {
+    display: inline-block;
+    vertical-align: top;
+    line-height: 19px;
+    margin-left: 8px;
+    p {
+      margin-bottom: 0px;
+    }
+  }
+  hr {
+    margin: 7px 0;
+  }
+  button, .widget-link {
+    margin-bottom: 8px;
+    width: 100%;
+    &.sign-up-button, &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+  .widget-link {
+    padding: 0;
+    height: 30px;
+    line-height: 30px;
+  }
+  .notification-options {
+    .btn {
+      margin-top: 8px;
+    }
+    .dropdown-toggle {
+      float: none;
+      .fa {
+        margin-right: 5px;
+      }
+    }
+    p {
+      line-height: 18px;
+      margin: 8px 0 0 0;
+    }
+  }
+  .dropdown-menu {
+    bottom: initial;
+  }
+}

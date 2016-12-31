@@ -1,0 +1,4 @@
+en:
+  site_settings:
+    widget_profile_guest_welcome_title: "Title of a welcome message for non-users that displays in place of profile details"
+    widget_profile_guest_welcome_body: "Body of a welcome message for non-users that displays in place of profile details"
