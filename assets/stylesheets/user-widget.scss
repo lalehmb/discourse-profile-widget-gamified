@@ -6,9 +6,11 @@
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
+    line-height: 20px;
+    padding-bottom: 0;
   }
-  .welcome-body {
-    padding: 5px 0;
+  .welcome-body p {
+    margin: 5px 0;
     line-height: 20px;
   }
   img {

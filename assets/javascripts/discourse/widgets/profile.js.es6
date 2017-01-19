@@ -1,6 +1,8 @@
 import { createWidget } from 'discourse/widgets/widget';
 import { h } from 'virtual-dom';
 import { avatarImg } from 'discourse/widgets/post';
+import { cook } from 'discourse/lib/text';
+import RawHtml from 'discourse/widgets/raw-html';
 import showModal from 'discourse/lib/show-modal';
 
 export default createWidget('profile', {
@@ -24,9 +26,14 @@ export default createWidget('profile', {
     topicController.send('toggleBookmark')
   },
 
-  showLogin() {
+  sendShowLogin() {
     const appRoute = this.register.lookup('route:application');
     appRoute.send('showLogin');
+  },
+
+  sendShowCreateAccount() {
+    const appRoute = this.register.lookup('route:application');
+    appRoute.send('showCreateAccount');
   },
 
   showInvite() {
@@ -60,11 +67,11 @@ export default createWidget('profile', {
     } else {
       contents.push(
         h('div.widget-header', Discourse.SiteSettings.widget_profile_guest_welcome_title),
-        h('div.welcome-body', Discourse.SiteSettings.widget_profile_guest_welcome_body),
+        h('div.welcome-body', new RawHtml({ html: cook(Discourse.SiteSettings.widget_profile_guest_welcome_body).string })),
         this.attach('button', {
           label: "sign_up",
           className: 'btn-primary sign-up-button',
-          action: "showCreateAccount"
+          action: "sendShowCreateAccount"
         })
       )
     }
