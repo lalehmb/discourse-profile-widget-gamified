@@ -1,7 +1,9 @@
 html:not(.anon)  .user-profile {
      
-     border-bottom: none;
+    border-bottom: none;
     margin-bottom: -2px;
+    background-color: white;
+    line-height: 10px;
 
 .widget-inner {   padding: 5px;}
 
@@ -13,7 +15,7 @@ html:not(.anon)  .user-profile {
 .handles p {display: none;}
 
 .credit {
-  margin-left: 0px;
+    margin-left: 0px;
     position: relative;
     left: 35%;
     margin-top: -15px;}
@@ -23,17 +25,7 @@ html:not(.anon)  .user-profile {
 .credit-number {font-size: 15px;
     margin-top: 4px;
     color: gray;
-}
-    
-
-}
-
-
-
-.user-profile {
-
-  background-color: white;
-  line-height: 10px;
+}  
   .credit-number:after{
     margin-left: 3px;
     content: "اعتبار شما";
@@ -42,17 +34,6 @@ html:not(.anon)  .user-profile {
     display: block;
     margin-top: 6px;
     margin-bottom: 6px;
-}
-.credit-img{
-  float: left;
-    display: block;
-    margin-top: -17px;
-    margin-bottom: -11px;
-  }
-
-  button.sign-up-button{
-    font-size: 0px !important;
-   // 
 }
 
 button.createTopic{
@@ -66,31 +47,6 @@ box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px 
 
 button:last-of-type:hover {color: black;}
 
-button.sign-up-button:after {
-    content: "طرح مسئله!";
-    font-size: 16px;}
-
-    .welcome-body p strong{ color: #044c02;}
-
-
-
-  .widget-header {
-    width: 143px;
-    overflow: hidden;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    line-height: 20px;
-    padding-bottom: 0;
-  }
-  .welcome-body p {
-    margin: 5px 0;
-    line-height: 20px;
-  }
-  img {
-    display: inline-block;
-    vertical-align: initial;
-  }
   .handles {
     display: inline-block;
     vertical-align: top;
@@ -133,4 +89,74 @@ button.sign-up-button:after {
   .dropdown-menu {
     bottom: initial;
   }
+}  
+
+html.anon .user-profile{
+
+background-color: #00a1cb;
+border-radius: 5px;
+
+button.sign-up-button{
+    font-size: 0px !important;
+    background-color: white;
+    border-radius: 5px;
+    margin-left: 25%;
+-webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.4);
+box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.4);
+}
+
+button.sign-up-button:hover{
+   background-color: #f2f9ab;
+}
+
+
+button.sign-up-button:after {
+    content: "طرح مسئله!";
+    font-size: 16px;
+    color: #16455c;
+}
+
+    .widget-header{
+      overflow: hidden;
+      display: inline-block;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-bottom: 0;
+  
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        background-color: #16455c;
+        width: 111%;
+        height: 40px;
+        text-align: center;
+        font-size: 18px;
+        color: white;
+        padding-top: 25px;
+        margin-top: -8px;
+        margin-left: -7px;
+    }
+
+    .welcome-body p{
+        color: white;
+        font-size: 16px;
+         margin: 5px 0;
+        line-height: 24px;
+        text-align: justify;
+    }
+
+    .welcome-body p strong{
+        color: #f2f9ab;
+    }
+
+    widget-button btn-primary sign-up-button {
+        color: azure;
+    }
+
+    a {
+        color: azure;
+    }
+
+    a:hover {
+        color: black;
+    }
 }
