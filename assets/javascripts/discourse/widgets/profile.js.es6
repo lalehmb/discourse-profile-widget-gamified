@@ -6,6 +6,7 @@ import RawHtml from 'discourse/widgets/raw-html';
 import { ajax } from 'discourse/lib/ajax';
 import showModal from 'discourse/lib/show-modal';
 import Composer from 'discourse/models/composer';
+import TextLib from 'discourse/lib/text';
 import { getOwner } from 'discourse-common/lib/get-owner';
 
 export default createWidget('profile', {
@@ -17,7 +18,9 @@ export default createWidget('profile', {
       topic: attrs.topic,
       bookmarked: attrs.topic ? attrs.topic.bookmarked : null,
       loaded: false,
-      credit: 0
+      credit: 0,
+      cooked: false,
+      cookedData: []
   }
 },
 
@@ -79,6 +82,7 @@ getReadTime(id){
 },
 
 html(attrs, state) {
+    let self = this;
     const { currentUser } = this;
     const topic = state.topic;
     let contents = []
@@ -132,15 +136,34 @@ html(attrs, state) {
           );
     }
 } else {
-  contents.push(
-    h('div.widget-header', Discourse.SiteSettings.widget_profile_guest_welcome_title),
-    h('div.welcome-body', new RawHtml({ html: cook(Discourse.SiteSettings.widget_profile_guest_welcome_body).string })),
-    this.attach('button', {
-      label: "sign_up",
-      className: 'btn-primary sign-up-button',
-      action: "sendShowCreateAccount"
-  })
-    )
+  var myString = Discourse.SiteSettings.widget_profile_guest_welcome_body;
+  if(!state.cooked)
+  {
+    TextLib.cookAsync(myString).then(cooked => {
+      contents.push(
+        h('div.widget-header', Discourse.SiteSettings.widget_profile_guest_welcome_title),
+        this.attach('button', {
+          label: "sign_up",
+         className: 'btn-primary sign-up-button',
+         action: "sendShowCreateAccount"
+          })
+        )
+                state.cookedData = cooked;
+              state.cooked = true;
+              self.scheduleRerender();
+            });
+  }else{
+    contents.push(
+        h('div.widget-header', Discourse.SiteSettings.widget_profile_guest_welcome_title),
+         h('div.welcome-body', new RawHtml({ html: state.cookedData.string })),
+        this.attach('button', {
+          label: "sign_up",
+         className: 'btn-primary sign-up-button',
+         action: "sendShowCreateAccount"
+          })
+        );
+  }
+  
 }
 
 contents.push(h('hr'))
