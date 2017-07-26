@@ -4,6 +4,8 @@ import { avatarImg } from 'discourse/widgets/post';
 import { cook } from 'discourse/lib/text';
 import RawHtml from 'discourse/widgets/raw-html';
 import showModal from 'discourse/lib/show-modal';
+import TextLib from 'discourse/lib/text';
+
 
 export default createWidget('profile', {
   tagName: 'div.user-profile.widget-container',
@@ -12,6 +14,8 @@ export default createWidget('profile', {
   defaultState(attrs) {
     return {
       topic: attrs.topic,
+      cooked: false,
+      cookedData: [],
       bookmarked: attrs.topic ? attrs.topic.bookmarked : null
     }
   },
@@ -65,15 +69,33 @@ export default createWidget('profile', {
         ])
       )
     } else {
+      var myString = Discourse.SiteSettings.widget_profile_guest_welcome_body;
+  if(!state.cooked)
+  {
+    TextLib.cookAsync(myString).then(cooked => {
       contents.push(
         h('div.widget-header', Discourse.SiteSettings.widget_profile_guest_welcome_title),
-        h('div.welcome-body', new RawHtml({ html: cook(Discourse.SiteSettings.widget_profile_guest_welcome_body).string })),
         this.attach('button', {
           label: "sign_up",
-          className: 'btn-primary sign-up-button',
-          action: "sendShowCreateAccount"
-        })
-      )
+         className: 'btn-primary sign-up-button',
+         action: "sendShowCreateAccount"
+          })
+        )
+                state.cookedData = cooked;
+              state.cooked = true;
+              self.scheduleRerender();
+            });
+  }else{
+    contents.push(
+        h('div.widget-header', Discourse.SiteSettings.widget_profile_guest_welcome_title),
+         h('div.welcome-body', new RawHtml({ html: state.cookedData.string })),
+        this.attach('button', {
+          label: "sign_up",
+         className: 'btn-primary sign-up-button',
+         action: "sendShowCreateAccount"
+          })
+        );
+  }
     }
 
     contents.push(h('hr'))
