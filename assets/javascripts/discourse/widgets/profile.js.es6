@@ -18,7 +18,8 @@ export default createWidget('profile', {
       topic: attrs.topic,
       bookmarked: attrs.topic ? attrs.topic.bookmarked : null,
       loaded: false,
-      credit: 0,
+      minute: 0,
+      hour: 0,
       cooked: false,
       cookedData: []
   }
@@ -63,8 +64,6 @@ getReadTime(id){
     self.state.loaded = true;
     ajax(`/discourseprofilewidget/data.json?user_id=${id}`).then(function(res){
         var credit = res.credit;
-        var day = Math.floor(Number(credit)/(3600*24));
-        credit = credit%(3600*24);
         var hours = Math.floor(Number(credit)/3600);
         credit = credit%(3600);
         var minutes = Math.floor(Number(credit)/60);
@@ -72,10 +71,9 @@ getReadTime(id){
             minutes = `0${minutes}`;
         if (hours < 10)
             hours = `0${hours}`;
-        if (day > 0)
-            self.state.credit = `${hours}:${minutes}, ${day}+`
-        else
-            self.state.credit = `${hours}:${minutes}, 0`
+
+        self.state.minute = minutes;
+        self.state.hour = hours;
         self.scheduleRerender();
     });
 
@@ -94,8 +92,7 @@ html(attrs, state) {
       if(state.loaded == false)
       {
         var trust_level = currentUser.get('trust_level');
-        if (trust_level != 0)
-            this.getReadTime(currentUser.id);
+          this.getReadTime(currentUser.id);
         contents.push(
           avatarImg('large', {
             template: currentUser.get('avatar_template'),
@@ -131,8 +128,7 @@ html(attrs, state) {
             h('p', `@${username}`)
             ]),
           h("div.credit", [
-            h("img.credit-img", {attributes:{title: I18n.t("main.your-read-time"), width: "30px", heigth: "30px", src: "https://padpors.com/uploads/default/original/2X/c/c353ee5a6ef28f01a51cba1ff226f84279041736.png"}}),
-            h("span.credit-number", `${state.credit}`)])
+            h("span.credit-number", [h("span.hour_credit", {attributes: {title: I18n.t("main.hour")}}, `${state.hour}:`), h("span.minute_credit", {attributes: {title: I18n.t("main.minute")}}, `${state.minute}`)])])
           );
     }
 } else {
@@ -219,14 +215,23 @@ if (currentUser) {
   if(currentUser)
   {
     var trust_levell = currentUser.get('trust_level');
-  if(!this.site.mobileView && trust_levell > 0)
+  if(!this.site.mobileView && trust_levell == 0)
+    contents.push(this.attach("button",{
+              className: "btn btn-default createTopic",
+              label:"topic.create" ,
+              icon: "plus",
+              action: "createTopic",
+              disabled: true,
+              title: "main.cant_create_topic_button"
+        
+            }));
+  else if(!this.site.mobileView && trust_levell > 0)
     contents.push(this.attach("button",{
               className: "btn btn-default createTopic",
               label:"topic.create" ,
               icon: "plus",
               action: "createTopic"
-        
-            }));
+              }));
   }
   
   if (!this.site.mobileView && this.canInviteToForum()) {
@@ -238,6 +243,15 @@ if (currentUser) {
       model: currentUser
   }))
 }
+  else if(!this.site.mobileView && trust_levell == 1)
+   contents.push(this.attach('button', {
+        route: 'userInvited',
+        className: 'btn',
+        icon: 'user-plus',
+        label: 'user.invited.title',
+        disabled: "true",
+        title: "main.cant_invite_button"
+   }))
 }
   
 return h('div.widget-inner', contents);

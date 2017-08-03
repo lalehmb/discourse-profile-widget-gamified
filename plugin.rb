@@ -16,9 +16,9 @@ after_initialize do
 		end
 	end
 
-	SiteSetting.class_eval do
-		@choices[:layouts_sidebar_right_widgets].push('profile')
-	end
+	# SiteSetting.class_eval do
+	# 	@choices[:layouts_sidebar_right_widgets].push('profile')
+	# end
 
 	class DiscourseProfileWidget::ProfilewidgetController < ::ApplicationController
 		skip_before_filter :preload_json, :check_xhr
@@ -26,11 +26,10 @@ after_initialize do
 		def index
 			user_id = params[:user_id].to_i
 
-			sql = sql = "SELECT * FROM user_stats WHERE user_id = #{user_id}"
-			user_stats = ActiveRecord::Base.connection.execute(sql)
-			read_time = user_stats[0]["time_read"]
+			user_stats = UserStat.where(user_id: user_id).first
+
 			result = {
-				'credit' => read_time
+				'credit' => user_stats.time_read
 			}
 			render json: result
 			

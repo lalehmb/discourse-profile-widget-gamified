@@ -1,0 +1,8 @@
+en: 
+    js: 
+        main:
+            your-read-time: "Your read time"
+            cant_create_topic_button: "You need at least 13min read time to create a topic"
+            cant_invite_button: "You need at least 13min read time to able to invite new people"
+            hour: "Hour"
+            minute: "Minute"
