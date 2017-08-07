@@ -6,3 +6,7 @@ en:
             cant_invite_button: "You need at least 13min read time to able to invite new people"
             hour: "Hour"
             minute: "Minute"
+            apply_to_top_less_than_24h: "you should at least have 24 hour reputation"
+            apply_to_top_more_than_24h: "GREAT! You cann aplly to top group"
+            apply_to_top: "Apply To top"
+            invite_to_solve: "Invite others to solve this probelm"

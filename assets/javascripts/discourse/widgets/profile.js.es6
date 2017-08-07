@@ -21,6 +21,7 @@ export default createWidget('profile', {
       minute: 0,
       hour: 0,
       cooked: false,
+      isTop: false,
       cookedData: []
   }
 },
@@ -73,6 +74,7 @@ getReadTime(id){
             hours = `0${hours}`;
 
         self.state.minute = minutes;
+        self.state.isTop = res.is_top;
         self.state.hour = hours;
         self.scheduleRerender();
     });
@@ -181,7 +183,16 @@ contents.push(this.attach('button', {
     data: {
       'share-url': topic.get('shareUrl')
   }
-}))
+}));
+var shareLink = topic.get('shareUrl');
+var shareTitle = topic.get('title');
+contents.push(h("p.invite-solve", I18n.t("main.invite_to_solve")));
+contents.push(h("div.share-icons", [
+  h("a", {attributes:{href: 'https://t.me/share/url?url=https://padpors.com'+shareLink+'&text='+shareTitle , target: "blank"}}, h("i.fa.fa-telegram.share-icon",{attributes:{}})),
+  h("a", {attributes:{href: 'http://www.facebook.com/sharer.php?u=https://padpors.com'+shareLink+'&t='+shareTitle , target: "blank"}}, h("i.fa.fa-facebook-official.share-icon",{attributes:{}})),
+  h("a", {attributes:{href: 'http://twitter.com/intent/tweet?url=https://padpors.com'+shareLink+'&text='+shareTitle , target: "blank"}}, h("i.fa.fa-twitter-square.share-icon",{attributes:{}}))
+  ]));
+
 if (currentUser) {
     let tooltip = state.bookmarked ? 'bookmarks.created' : 'bookmarks.not_bookmarked';
     let label = state.bookmarked ? 'bookmarks.remove' : 'bookmarked.title';
@@ -251,8 +262,28 @@ if (currentUser) {
         label: 'user.invited.title',
         disabled: "true",
         title: "main.cant_invite_button"
+   }));
+ if (!state.isTop && state.loaded && !this.site.mobileView && trust_levell == 2)
+ {
+
+  var title;
+  if (state.hour > 23)
+    title = "main.apply_to_top_more_than_24h";
+  else
+    title = "main.apply_to_top_less_than_24h";
+
+    contents.push(this.attach('button', {
+        route: 'userInvited',
+        className: 'btn',
+        icon: 'plus',
+        label: 'main.apply_to_top',
+        disabled: "true",
+        title: title
    }))
+ }
+
 }
+
   
 return h('div.widget-inner', contents);
 }

@@ -12,6 +12,8 @@ html:not(.anon)  .user-profile {
     width: 55px;
     height: 55px;
 }
+
+
 .handles p {display: none;}
 
 .credit {
@@ -90,6 +92,22 @@ button:last-of-type:hover {color: black;}
     bottom: initial;
   }
 }  
+p.invite-solve{
+  line-height: 20px;
+}
+  .share-icon{
+    font-size: 30px;
+    color: #0070bb;
+    margin: 7px;
+  
+}
+.share-icon:hover{
+    color: #ccc;
+}
+
+.share-icons{
+  margin-left: 25px;
+}
 
 html.anon .user-profile{
 

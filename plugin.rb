@@ -16,9 +16,8 @@ after_initialize do
 		end
 	end
 
-	# SiteSetting.class_eval do
-	# 	@choices[:layouts_sidebar_right_widgets].push('profile')
-	# end
+	DiscourseLayouts::WidgetHelper.add_widget('profile')
+
 
 	class DiscourseProfileWidget::ProfilewidgetController < ::ApplicationController
 		skip_before_filter :preload_json, :check_xhr
@@ -28,8 +27,17 @@ after_initialize do
 
 			user_stats = UserStat.where(user_id: user_id).first
 
+			top = Group.where(name: 'top').first
+
+			if( GroupUser.where(group_id: top.id, user_id: user_id).present? )
+				is_top = true
+			else
+				is_top = false
+			end
+
 			result = {
-				'credit' => user_stats.time_read
+				'credit' => user_stats.time_read,
+				'is_top' => is_top
 			}
 			render json: result
 			
