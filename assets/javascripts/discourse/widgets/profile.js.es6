@@ -210,11 +210,11 @@ if (currentUser) {
             className: buttonClass
         }),
           new ComponentConnector(this,'topic-notifications-button', {
-			topic,
-			appendReason: true,
-			showFullTitle: false
-		})
-          )
+	     topic: topic,
+	     appendReason: true,
+	     showFullTitle: false
+	})
+        )
 } else {
     contents.push(this.attach('button', {
       className: 'btn',
