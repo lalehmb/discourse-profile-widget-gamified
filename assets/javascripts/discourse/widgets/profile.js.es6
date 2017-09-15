@@ -201,7 +201,7 @@ if (currentUser) {
 
     if (state.bookmarked) { buttonClass += ' bookmarked' }
 
-      contents.push(
+    contents.push(
     this.attach('button', {
       action: 'toggleBookmark',
       title: tooltip,
@@ -218,6 +218,7 @@ if (currentUser) {
       showFullTitle: false
     })
   );
+
 } else {
     contents.push(this.attach('button', {
       className: 'btn',
