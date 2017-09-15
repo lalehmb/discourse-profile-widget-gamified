@@ -8,6 +8,7 @@ import showModal from 'discourse/lib/show-modal';
 import Composer from 'discourse/models/composer';
 import TextLib from 'discourse/lib/text';
 import { getOwner } from 'discourse-common/lib/get-owner';
+import ComponentConnector from 'discourse/widgets/component_connector';
 
 export default createWidget('profile', {
   tagName: 'div.user-profile.widget-container',
@@ -208,11 +209,11 @@ if (currentUser) {
             icon: 'bookmark',
             className: buttonClass
         }),
-          this.attach('topic-notifications-button', {
-            topic: topic,
-            appendReason: true,
-            showFullTitle: false
-        })
+          new ComponentConnector(this,'topic-notifications-button', {
+			topic,
+			appendReason: true,
+			showFullTitle: false
+		})
           )
 } else {
     contents.push(this.attach('button', {
