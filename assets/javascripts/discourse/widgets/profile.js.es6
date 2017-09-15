@@ -201,20 +201,23 @@ if (currentUser) {
 
     if (state.bookmarked) { buttonClass += ' bookmarked' }
 
-        contents.push(
-          this.attach('button', {
-            action: 'toggleBookmark',
-            title: tooltip,
-            label: label,
-            icon: 'bookmark',
-            className: buttonClass
-        }),
-          new ComponentConnector(this,'topic-notifications-button', {
-	     topic: topic,
-	     appendReason: true,
-	     showFullTitle: false
-	})
-        )
+      contents.push(
+    this.attach('button', {
+      action: 'toggleBookmark',
+      title: tooltip,
+      label: label,
+      icon: 'bookmark',
+      className: buttonClass
+    })
+  );
+
+  contents.push(
+    new ComponentConnector(this,'topic-notifications-button', {
+      topic,
+      appendReason: true,
+      showFullTitle: false
+    })
+  );
 } else {
     contents.push(this.attach('button', {
       className: 'btn',
