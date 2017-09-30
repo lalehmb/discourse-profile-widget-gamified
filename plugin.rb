@@ -20,7 +20,7 @@ after_initialize do
 
 
 	class DiscourseProfileWidget::ProfilewidgetController < ::ApplicationController
-		skip_before_filter :preload_json, :check_xhr
+		skip_before_action :preload_json, :check_xhr
 
 		def index
 			user_id = params[:user_id].to_i
